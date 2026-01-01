@@ -1,0 +1,133 @@
+# Settlements
+
+Settlement accounts are where you receive payouts from Orafi.
+
+## Crypto Settlements
+
+### Adding Accounts
+
+```javascript
+await fetch('/settlement/crypto/add', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'x-api-key': process.env.ORAFI_API_KEY
+  },
+  body: JSON.stringify({
+    address: '0x742d35Cc6634C0532925a3b844Bc454e4438f44e',
+    chain: 'ethereum'
+  })
+});
+```
+
+### Retrieving Accounts
+
+```javascript
+const response = await fetch('/settlement/crypto', {
+  headers: {
+    'x-api-key': process.env.ORAFI_API_KEY
+  }
+});
+```
+
+### Deleting Accounts
+
+```javascript
+await fetch(`/settlement/crypto/delete/${accountId}`, {
+  method: 'DELETE',
+  headers: {
+    'x-api-key': process.env.ORAFI_API_KEY
+  }
+});
+```
+
+## Fiat Settlements
+
+### Getting Bank List
+
+```javascript
+const response = await fetch('/settlement/fiat/bank-list', {
+  headers: {
+    'x-api-key': process.env.ORAFI_API_KEY
+  }
+});
+```
+
+### Adding Accounts
+
+```javascript
+await fetch('/settlement/fiat/add', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'x-api-key': process.env.ORAFI_API_KEY
+  },
+  body: JSON.stringify({
+    bankName: 'Bank of America',
+    bankCode: 'BOA',
+    accountNumber: '1234567890'
+  })
+});
+```
+
+### Managing Accounts
+
+```javascript
+// Get accounts
+const response = await fetch('/settlement/fiat', {
+  headers: {
+    'x-api-key': process.env.ORAFI_API_KEY
+  }
+});
+
+// Update account
+await fetch(`/settlement/fiat/${accountId}`, {
+  method: 'PATCH',
+  headers: {
+    'Content-Type': 'application/json',
+    'x-api-key': process.env.ORAFI_API_KEY
+  },
+  body: JSON.stringify({
+    bankName: 'Updated Bank Name'
+  })
+});
+
+// Delete account
+await fetch(`/settlement/fiat/${accountId}`, {
+  method: 'DELETE',
+  headers: {
+    'x-api-key': process.env.ORAFI_API_KEY
+  }
+});
+```
+
+## Settlement Schemas
+
+### Crypto Account
+
+```json
+{
+  "id": "crypto_abc123",
+  "address": "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+  "chain": "ethereum"
+}
+```
+
+### Fiat Account
+
+```json
+{
+  "id": "fiat_abc123",
+  "bankName": "Bank of America",
+  "bankCode": "BOA",
+  "accountNumber": "1234567890"
+}
+```
+
+## Best Practices
+
+1. **Verification**: Verify account ownership
+2. **Security**: Use secure account details
+3. **Multiple accounts**: Set up backup settlement accounts
+4. **Currency matching**: Use appropriate accounts for currencies
+5. **Regular updates**: Keep account information current

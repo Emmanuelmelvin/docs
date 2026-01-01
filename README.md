@@ -1,43 +1,33 @@
-# Mintlify Starter Kit
+# Orafi API Documentation
 
-Use the starter kit to get your docs deployed and ready to customize.
+Welcome to the Orafi API documentation. This documentation provides everything you need to integrate crypto payments into your application.
 
-Click the green **Use this template** button at the top of this repo to copy the Mintlify starter kit. The starter kit contains examples with
+## Table of Contents
 
-- Guide pages
-- Navigation
-- Customizations
-- API reference pages
-- Use of popular components
+- [Introduction](Introduction.md) - Overview of Orafi and what it does
+- [Getting Started](Getting-Started.md) - Quick start guide with your first payment
+- [Authentication](Authentication.md) - API keys, JWT tokens, and security
+- [Payments](Payments.md) - Payment creation, verification, and lifecycle
+- [Paylinks](Paylinks.md) - Pre-configured payment pages
+- [Webhooks](Webhooks.md) - Real-time event notifications
+- [Transactions](Transactions.md) - Transaction records and history
+- [Payouts](Payouts.md) - Withdrawing funds from your balance
+- [Refunds](Refunds.md) - Processing customer refunds
+- [Customers](Customers.md) - Managing customer information
+- [Business Profile](Business-Profile.md) - Your company information and settings
+- [Settlements](Settlements.md) - Crypto and fiat settlement accounts
+- [Errors & Retries](Errors-and-Retries.md) - Error handling and retry logic
 
-**[Follow the full quickstart guide](https://starter.mintlify.com/quickstart)**
+## API Reference
 
-## Development
+The complete API reference is auto-generated from our OpenAPI specification. See [openapi.yaml](./openapi.yaml) for the full specification.
 
-Install the [Mintlify CLI](https://www.npmjs.com/package/mint) to preview your documentation changes locally. To install, use the following command:
+## Support
 
-```
-npm i -g mint
-```
+- **Documentation Issues**: Report issues with this documentation
+- **API Issues**: Contact support for API-related problems
+- **Feature Requests**: Suggest new features
 
-Run the following command at the root of your documentation, where your `docs.json` is located:
+## Version
 
-```
-mint dev
-```
-
-View your local preview at `http://localhost:3000`.
-
-## Publishing changes
-
-Install our GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app) to propagate changes from your repo to your deployment. Changes are deployed to production automatically after pushing to the default branch.
-
-## Need help?
-
-### Troubleshooting
-
-- If your dev environment isn't running: Run `mint update` to ensure you have the most recent version of the CLI.
-- If a page loads as a 404: Make sure you are running in a folder with a valid `docs.json`.
-
-### Resources
-- [Mintlify documentation](https://mintlify.com/docs)
+This documentation is for Orafi API v1.0.0.

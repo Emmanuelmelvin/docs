@@ -1,0 +1,58 @@
+---
+title: "Refunds"
+description: "Process refunds for transactions"
+---
+
+# Refunds
+
+Refunds allow you to return funds to customers for failed or cancelled transactions.
+
+## Creating Refunds
+
+```javascript
+const refund = await fetch('/transactions/refund', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'x-api-key': process.env.ORAFI_API_KEY
+  },
+  body: JSON.stringify({
+    transactionId: 'txn_abc123',
+    amount: 5000
+  })
+});
+```
+
+## Retrying Failed Refunds
+
+```javascript
+await fetch('/transactions/refund/retry', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'x-api-key': process.env.ORAFI_API_KEY
+  },
+  body: JSON.stringify({
+    refundId: 'refund_abc123'
+  })
+});
+```
+
+## Refund Schema
+
+```json
+{
+  "id": "refund_abc123",
+  "amount": 5000,
+  "status": "CONFIRMED",
+  "transactionId": "txn_xyz789"
+}
+```
+
+## Best Practices
+
+1. **Policy clarity**: Define refund policies clearly
+2. **Amount limits**: Don't refund more than original payment
+3. **Reason tracking**: Record refund reasons
+4. **Customer communication**: Notify customers of refunds
+5. **Fee consideration**: Account for refund processing fees

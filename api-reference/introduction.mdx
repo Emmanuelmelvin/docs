@@ -1,33 +1,78 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: 'API Reference'
+description: 'Complete API documentation for Orafi'
 ---
 
 <Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
+  This section contains auto-generated API documentation from our OpenAPI specification.
 </Note>
 
-## Welcome
+## Getting Started
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
-
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+The Orafi API is organized around REST. Our API has predictable resource-oriented URLs, accepts JSON-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes.
 
 ## Authentication
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+All API requests require authentication using API keys. Include your API key in the `x-api-key` header:
+
+```
+x-api-key: ora_live_your_api_key_here
+```
+
+## Base URLs
+
+- **Production**: `https://api.orafi.com`
+- **Test**: `https://test.api.orafi.com`
+
+## Response Format
+
+All responses follow a consistent format:
 
 ```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+{
+  "success": true,
+  "message": "Operation successful",
+  "data": { ... }
+}
 ```
+
+## Error Handling
+
+Errors return appropriate HTTP status codes with error details:
+
+```json
+{
+  "success": false,
+  "message": "Error description",
+  "errors": [
+    {
+      "field": "amount",
+      "message": "Amount must be positive"
+    }
+  ]
+}
+```
+
+## Rate Limiting
+
+API requests are rate limited. Check the response headers for limit information:
+
+- `X-RateLimit-Limit`: Maximum requests per hour
+- `X-RateLimit-Remaining`: Remaining requests
+- `X-RateLimit-Reset`: Time when limit resets
+
+## SDKs & Libraries
+
+We provide official SDKs for popular languages:
+
+- [JavaScript SDK](https://github.com/orafi/js-sdk)
+- [Python SDK](https://github.com/orafi/python-sdk)
+- [PHP SDK](https://github.com/orafi/php-sdk)
+
+## Support
+
+Need help? Contact our support team:
+
+- **Email**: support@orafi.com
+- **Documentation**: [docs.orafi.com](https://docs.orafi.com)
+- **Status Page**: [status.orafi.com](https://status.orafi.com)

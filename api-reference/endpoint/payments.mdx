@@ -1,0 +1,74 @@
+---
+title: "Payments API"
+description: "Examples for payment-related endpoints"
+---
+
+# Payment Endpoints
+
+## Create Hosted Payment
+
+Create a new hosted checkout payment.
+
+```bash
+curl -X POST https://api.orafi.com/transactions/payment/hosted/create \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: your_api_key" \
+  -d '{
+    "amount": 10000,
+    "customer": {
+      "fullname": "John Doe",
+      "email": "john@example.com"
+    },
+    "txRef": "order_12345",
+    "type": "HOSTED_CHECKOUT",
+    "redirectUrl": "https://yourapp.com/success"
+  }'
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "id": "pay_abc123",
+    "amount": 10000,
+    "depositAddress": "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+    "status": "INITIALIZED",
+    "checkoutUrl": "https://pay.orafi.com/checkout/pay_abc123"
+  }
+}
+```
+
+## Verify Payment
+
+Check the status of a payment.
+
+```bash
+curl -X POST https://api.orafi.com/transactions/payment/verify \
+  -H "Content-Type: application/json" \
+  -d '{
+    "paymentId": "pay_abc123"
+  }'
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "id": "pay_abc123",
+    "status": "CONFIRMED",
+    "amount": 10000,
+    "txRef": "order_12345"
+  }
+}
+```
+
+## Retrieve Payment
+
+Get detailed payment information.
+
+```bash
+curl -X GET "https://api.orafi.com/transactions/payment/retrieve?payment_id=pay_abc123" \
+  -H "x-api-key: your_api_key"
+```

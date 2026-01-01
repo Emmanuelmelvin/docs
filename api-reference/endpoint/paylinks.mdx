@@ -1,0 +1,75 @@
+---
+title: "Paylinks API"
+description: "Examples for paylink management endpoints"
+---
+
+# Paylink Endpoints
+
+## Create Paylink
+
+Create a new paylink with product details.
+
+```bash
+curl -X POST https://api.orafi.com/paylink/create \
+  -H "Authorization: Bearer your_jwt_token" \
+  -F 'payload={
+    "title": "Premium Subscription",
+    "description": "Monthly premium access",
+    "amount": 2999
+  }' \
+  -F 'images=@product1.jpg' \
+  -F 'images=@product2.jpg'
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "id": "paylink_abc123",
+    "title": "Premium Subscription",
+    "amount": 2999,
+    "url": "https://pay.orafi.com/paylink_abc123"
+  }
+}
+```
+
+## Get Paylink Details
+
+Retrieve paylink information.
+
+```bash
+curl -X GET https://api.orafi.com/paylink/paylink_abc123
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "id": "paylink_abc123",
+    "title": "Premium Subscription",
+    "description": "Monthly premium access",
+    "amount": 2999,
+    "images": ["image1.jpg", "image2.jpg"]
+  }
+}
+```
+
+## List Paylinks
+
+Get all your paylinks.
+
+```bash
+curl -X GET https://api.orafi.com/paylink \
+  -H "Authorization: Bearer your_jwt_token"
+```
+
+## Delete Paylink
+
+Remove a paylink.
+
+```bash
+curl -X DELETE https://api.orafi.com/paylink/paylink_abc123 \
+  -H "Authorization: Bearer your_jwt_token"
+```

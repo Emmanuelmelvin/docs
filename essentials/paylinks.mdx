@@ -1,0 +1,90 @@
+---
+title: "Paylinks"
+description: "Create and manage payment links for products"
+---
+
+# Paylinks
+
+Paylinks are pre-configured payment pages that customers can use to make payments without you building a custom checkout flow.
+
+## Creating a Paylink
+
+Create a paylink with product details and images:
+
+```javascript
+const formData = new FormData();
+formData.append('payload', JSON.stringify({
+  title: 'Premium Subscription',
+  description: 'Monthly premium access',
+  amount: 2999  // $29.99 in cents
+}));
+formData.append('images', imageFile1);
+formData.append('images', imageFile2);
+
+const response = await fetch('/paylink/create', {
+  method: 'POST',
+  headers: {
+    'Authorization': `Bearer ${jwtToken}`
+  },
+  body: formData
+});
+
+const paylink = await response.json();
+console.log('Paylink URL:', `https://pay.orafi.com/${paylink.data.id}`);
+```
+
+## Retrieving Paylink Details
+
+Get paylink information for public display:
+
+```javascript
+const response = await fetch(`/paylink/${paylinkId}`);
+const details = await response.json();
+
+console.log(details.data.title, details.data.amount);
+```
+
+## Managing Paylinks
+
+List all your paylinks:
+
+```javascript
+const response = await fetch('/paylink', {
+  headers: {
+    'Authorization': `Bearer ${jwtToken}`
+  }
+});
+```
+
+Delete a paylink:
+
+```javascript
+await fetch(`/paylink/${paylinkId}`, {
+  method: 'DELETE',
+  headers: {
+    'Authorization': `Bearer ${jwtToken}`
+  }
+});
+```
+
+## Paylink Schema
+
+```json
+{
+  "id": "paylink_abc123",
+  "title": "Product Name",
+  "description": "Product description",
+  "amount": 10000,
+  "imageBlobIds": ["blob_123", "blob_456"],
+  "mode": "live",
+  "profileId": "profile_xyz"
+}
+```
+
+## Best Practices
+
+1. **Clear descriptions**: Use descriptive titles and details
+2. **Quality images**: Upload high-quality product images (max 4, up to 10MB each)
+3. **Amount accuracy**: Ensure amounts match your pricing
+4. **Mode awareness**: Test paylinks in test mode first
+5. **Secure sharing**: Share paylink URLs securely

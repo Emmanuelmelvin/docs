@@ -1,0 +1,72 @@
+---
+title: "Payouts API"
+description: "Examples for payout-related endpoints"
+---
+
+# Payout Endpoints
+
+## Check Balances
+
+Get available payout balances.
+
+```bash
+curl -X GET https://api.orafi.com/transactions/payout/balances \
+  -H "x-api-key: your_api_key"
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "crypto": {
+      "USDC": 50000,
+      "ETH": 0
+    },
+    "fiat": {
+      "USD": 100000
+    }
+  }
+}
+```
+
+## Create Crypto Payout
+
+Withdraw to a cryptocurrency wallet.
+
+```bash
+curl -X POST https://api.orafi.com/transactions/payout/crypto \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: your_api_key" \
+  -d '{
+    "amount": 5000,
+    "walletAddress": "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+    "currency": "USDC"
+  }'
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "id": "payout_abc123",
+    "amount": 5000,
+    "status": "INITIALIZED",
+    "walletAddress": "0x742d35Cc6634C0532925a3b844Bc454e4438f44e"
+  }
+}
+```
+
+## Retry Failed Payout
+
+Retry a failed payout.
+
+```bash
+curl -X POST https://api.orafi.com/transactions/payout/crypto/retry \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: your_api_key" \
+  -d '{
+    "payoutId": "payout_abc123"
+  }'
+```

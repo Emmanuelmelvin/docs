@@ -1,0 +1,67 @@
+# Business Profile
+
+Your business profile contains information about your company and settings.
+
+## Retrieving Profile
+
+```javascript
+const response = await fetch('/profile', {
+  headers: {
+    'x-api-key': process.env.ORAFI_API_KEY
+  }
+});
+
+const profile = await response.json();
+```
+
+## Email Changes
+
+Request email change:
+
+```javascript
+await fetch('/profile/request-email-change', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'x-api-key': process.env.ORAFI_API_KEY
+  },
+  body: JSON.stringify({
+    newEmail: 'newemail@example.com'
+  })
+});
+```
+
+Verify email change:
+
+```javascript
+await fetch('/profile/verify-email-change', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'x-api-key': process.env.ORAFI_API_KEY
+  },
+  body: JSON.stringify({
+    token: 'verification_token'
+  })
+});
+```
+
+## Profile Schema
+
+```json
+{
+  "id": "profile_abc123",
+  "businessName": "Acme Corp",
+  "businessSector": "Technology",
+  "country": "US",
+  "websiteLink": "https://acme.com",
+  "isLive": true
+}
+```
+
+## Best Practices
+
+1. **Complete information**: Fill out all profile fields
+2. **Verification**: Keep contact information current
+3. **Compliance**: Ensure information meets regulatory requirements
+4. **Security**: Protect profile access

@@ -1,0 +1,54 @@
+# Transactions
+
+Transactions represent the complete record of payments, payouts, and refunds in your Orafi account.
+
+## Transaction Types
+
+- **Payment**: Customer payments (incoming)
+- **Payout**: Funds sent to you (outgoing)
+- **Refund**: Returns to customers
+
+## Retrieving Transactions
+
+Get all transactions:
+
+```javascript
+const response = await fetch('/transactions', {
+  headers: {
+    'x-api-key': process.env.ORAFI_API_KEY
+  }
+});
+
+const transactions = await response.json();
+```
+
+Get specific transaction:
+
+```javascript
+const response = await fetch(`/transactions/${transactionId}`, {
+  headers: {
+    'x-api-key': process.env.ORAFI_API_KEY
+  }
+});
+
+const transaction = await response.json();
+```
+
+## Transaction Schema
+
+```json
+{
+  "id": "txn_abc123",
+  "amount": 10000,
+  "status": "CONFIRMED",
+  "type": "PAYMENT",
+  "createdAt": "2024-01-01T00:00:00.000Z"
+}
+```
+
+## Best Practices
+
+1. **Regular reconciliation**: Check transactions daily
+2. **Status monitoring**: Track transaction statuses
+3. **Record keeping**: Store transaction IDs for reference
+4. **Amount verification**: Cross-reference with your records

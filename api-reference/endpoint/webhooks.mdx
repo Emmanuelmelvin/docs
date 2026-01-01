@@ -1,0 +1,83 @@
+---
+title: "Webhooks API"
+description: "Examples for webhook management endpoints"
+---
+
+# Webhook Endpoints
+
+## Register Webhook
+
+Set up a webhook endpoint.
+
+```bash
+curl -X POST https://api.orafi.com/webhook/register \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: your_api_key" \
+  -d '{
+    "url": "https://yourapp.com/webhooks/orafi",
+    "secret": "your_webhook_secret",
+    "events": ["payment.confirmed", "payment.failed"]
+  }'
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "id": "wh_abc123",
+    "url": "https://yourapp.com/webhooks/orafi",
+    "events": ["payment.confirmed", "payment.failed"],
+    "status": "ACTIVE"
+  }
+}
+```
+
+## Get Webhook Details
+
+Retrieve webhook configuration.
+
+```bash
+curl -X GET https://api.orafi.com/webhook \
+  -H "x-api-key: your_api_key"
+```
+
+## Subscribe to Events
+
+Add more events to your webhook.
+
+```bash
+curl -X POST https://api.orafi.com/webhook/subscribe \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: your_api_key" \
+  -d '{
+    "events": ["payout.completed"]
+  }'
+```
+
+## Get Delivery History
+
+Check webhook delivery attempts.
+
+```bash
+curl -X GET https://api.orafi.com/webhook/deliveries \
+  -H "x-api-key: your_api_key"
+```
+
+## Webhook Payload Example
+
+```json
+{
+  "event": "payment.confirmed",
+  "data": {
+    "id": "pay_abc123",
+    "amount": 10000,
+    "status": "CONFIRMED",
+    "txRef": "order_12345",
+    "customerId": "cus_xyz789",
+    "transactionId": "txn_def456"
+  },
+  "timestamp": 1640995260,
+  "signature": "sha256=..."
+}
+```

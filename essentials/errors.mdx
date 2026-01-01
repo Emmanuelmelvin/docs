@@ -1,0 +1,162 @@
+---
+title: "Errors & Retries"
+description: "Handle errors and implement retry logic properly"
+---
+
+# Errors & Retries
+
+Understanding how Orafi handles errors and implementing proper retry logic is crucial for building reliable integrations.
+
+## Error Categories
+
+### Client Errors (4xx)
+
+- **400 Bad Request**: Invalid request data or parameters
+- **401 Unauthorized**: Missing or invalid API key
+- **403 Forbidden**: Insufficient permissions
+- **404 Not Found**: Resource doesn't exist
+- **429 Too Many Requests**: Rate limit exceeded
+
+### Server Errors (5xx)
+
+- **500 Internal Server Error**: Unexpected server error
+- **502 Bad Gateway**: Upstream service error
+- **503 Service Unavailable**: Service temporarily unavailable
+
+## Common Failure Cases
+
+### Payment Failures
+
+- **Insufficient funds**: Customer sent less than required amount
+- **Network congestion**: High fees or slow confirmation
+- **Expired payment**: Payment not completed within 24 hours
+- **Invalid address**: Incorrect deposit address used
+
+### API Failures
+
+- **Rate limiting**: Too many requests per minute
+- **Invalid parameters**: Malformed request data
+- **Authentication errors**: Invalid or expired API keys
+
+## Safe Retry Logic
+
+### Idempotency Keys
+
+Use transaction references (`txRef`) as idempotency keys. Duplicate requests with the same `txRef` return the same result.
+
+```javascript
+async function createPaymentWithRetry(paymentData, maxRetries = 3) {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const response = await fetch('/transactions/payment/hosted/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': process.env.ORAFI_API_KEY
+        },
+        body: JSON.stringify(paymentData)
+      });
+      
+      if (response.ok) {
+        return await response.json();
+      }
+      
+      const error = await response.json();
+      
+      // Don't retry client errors
+      if (response.status >= 400 && response.status < 500) {
+        throw new Error(`Client error: ${error.message}`);
+      }
+      
+      // Retry server errors
+      if (attempt === maxRetries) {
+        throw new Error(`Max retries exceeded: ${error.message}`);
+      }
+      
+      // Exponential backoff
+      await new Promise(resolve => setTimeout(resolve, Math.pow(2, attempt) * 1000));
+      
+    } catch (error) {
+      if (attempt === maxRetries) {
+        throw error;
+      }
+      await new Promise(resolve => setTimeout(resolve, Math.pow(2, attempt) * 1000));
+    }
+  }
+}
+```
+
+### Webhook Retries
+
+Orafi automatically retries failed webhooks. Ensure your endpoint:
+
+- Returns 2xx status for successful processing
+- Handles duplicate events gracefully
+- Processes events within 10 seconds
+
+### Payment Verification Retries
+
+For payment verification, implement exponential backoff:
+
+```javascript
+async function verifyPaymentWithRetry(paymentId, maxRetries = 5) {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const response = await fetch('/transactions/payment/verify', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ paymentId })
+      });
+      
+      const result = await response.json();
+      
+      if (result.data.status === 'CONFIRMED') {
+        return result;
+      }
+      
+      if (result.data.status === 'FAILED') {
+        throw new Error('Payment failed');
+      }
+      
+      // Still pending, wait and retry
+      if (attempt < maxRetries) {
+        await new Promise(resolve => setTimeout(resolve, attempt * 2000));
+      }
+      
+    } catch (error) {
+      if (attempt === maxRetries) {
+        throw error;
+      }
+      await new Promise(resolve => setTimeout(resolve, attempt * 2000));
+    }
+  }
+}
+```
+
+## Error Response Format
+
+All errors follow this consistent format:
+
+```json
+{
+  "success": false,
+  "message": "Detailed error message",
+  "errors": [
+    {
+      "field": "amount",
+      "message": "Amount must be greater than 0"
+    }
+  ]
+}
+```
+
+## Best Practices
+
+1. **Log errors**: Always log errors with context
+2. **Monitor failures**: Set up alerts for high error rates
+3. **Graceful degradation**: Handle failures without breaking user experience
+4. **User communication**: Inform users of payment issues clearly
+5. **Retry limits**: Don't retry indefinitely
+6. **Circuit breakers**: Stop retrying if service is down

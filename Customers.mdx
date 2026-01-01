@@ -1,0 +1,73 @@
+# Customers
+
+Customers represent your buyers in the Orafi system.
+
+## Creating Customers
+
+```javascript
+const customer = await fetch('/customers/create', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'x-api-key': process.env.ORAFI_API_KEY
+  },
+  body: JSON.stringify({
+    firstname: 'John',
+    lastname: 'Doe',
+    email: 'john@example.com'
+  })
+});
+```
+
+## Retrieving Customers
+
+Get all customers:
+
+```javascript
+const response = await fetch('/customers', {
+  headers: {
+    'x-api-key': process.env.ORAFI_API_KEY
+  }
+});
+```
+
+Get specific customer:
+
+```javascript
+const response = await fetch(`/customers/${customerId}`, {
+  headers: {
+    'x-api-key': process.env.ORAFI_API_KEY
+  }
+});
+```
+
+## Deleting Customers
+
+```javascript
+await fetch(`/customers/${customerId}`, {
+  method: 'DELETE',
+  headers: {
+    'x-api-key': process.env.ORAFI_API_KEY
+  }
+});
+```
+
+## Customer Schema
+
+```json
+{
+  "id": "cus_abc123",
+  "firstname": "John",
+  "lastname": "Doe",
+  "email": "john@example.com",
+  "totalSpent": 25000
+}
+```
+
+## Best Practices
+
+1. **Data accuracy**: Collect accurate customer information
+2. **Email verification**: Verify customer email addresses
+3. **Privacy compliance**: Handle customer data responsibly
+4. **Segmentation**: Use customer data for targeted communications
+5. **Support tracking**: Link customers to support tickets
