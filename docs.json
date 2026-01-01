@@ -2,12 +2,12 @@
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
   "name": "Orafi",
-  "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
-  },
-  "favicon": "/logos/image-logo.png",
+"colors": {
+  "primary": "#2563EB",
+  "light": "#60A5FA",
+  "dark": "#1E40AF"
+},
+  "favicon": "./logos/image-logo.png",
   "navigation": {
     "tabs": [
       {
@@ -78,8 +78,8 @@
     }
   },
   "logo": {
-    "light": "/logos/image-logo.png",
-    "dark": "/logos/image-logo.png"
+    "light": "./logos/image-logo.png",
+    "dark": "./logos/image-logo.png"
   },
   "navbar": {
     "links": [
