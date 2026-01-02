@@ -1,39 +1,33 @@
-
 ---
 title: Fee Collection & Charges
-description: How platform charges are collected for payments, payouts, and refunds based on the OraFi smart contract.
+description: How platform charges are collected for payments, payouts, and refunds on OraFi.
 ---
 
 ## Overview
 
 OraFi collects platform charges directly at the **smart contract level** using a **basis-points fee model**.  
-Fees are deducted automatically during payment and payout execution and transferred to the platform admin wallet.
+Fees are deducted automatically during **payments** and **payouts** before funds reach the merchant.
 
-All logic described here is enforced **on-chain** and cannot be bypassed.
-
----
-
-## Fee Configuration
-
-```move
-const FEE_BASIS_POINTS: u64 = 100;
-const BASIS_POINTS_DIVISOR: u64 = 10000;
-````
-
-* **Fee Rate:** `100 / 10,000 = 1%`
-* Fees are calculated using **basis points** for precision.
-* Fees are always deducted **before funds reach the merchant**.
+All fee logic is enforced **on-chain**, making it transparent, deterministic, and non-bypassable.
 
 ---
 
-## Admin Fee Wallet
+## Fee Model
 
-```move
-const ADMIN_PUBLIC_KEY: address = @0x9970...f7f1;
-```
+- OraFi uses a **percentage-based fee system**
+- Fees are calculated using **basis points** for accuracy
+- The current platform fee is **1% per transaction**
+- Fees are always deducted **before settlement**
 
-* All platform fees are transferred directly to the **admin address**.
-* Fee transfers happen atomically within the same transaction.
+This ensures consistent and predictable charges across all supported flows.
+
+---
+
+## Platform Fee Wallet
+
+- All collected fees are transferred directly to a **platform-controlled admin wallet**
+- Fee transfers occur **within the same transaction** as the payment or payout
+- This guarantees atomic execution and prevents partial settlement
 
 ---
 
@@ -41,74 +35,65 @@ const ADMIN_PUBLIC_KEY: address = @0x9970...f7f1;
 
 ### How Payments Work
 
-1. A **payment wallet** is generated for a merchant with an expected amount.
-2. The customer sends **exactly the required USDC amount**.
-3. The contract:
+1. A payment request is created for a specific amount
+2. The customer completes the payment with the exact required value
+3. OraFi automatically:
+   - Validates the payment amount
+   - Calculates the platform fee
+   - Deducts the fee
+   - Sends the remaining balance to the merchant
 
-   * Validates the amount
-   * Calculates the platform fee
-   * Splits the funds
-   * Transfers fees and merchant funds
+The merchant never needs to manually calculate or send fees.
 
 ---
 
 ### Payment Fee Flow
 
-```move
-let fee_amount = (amount * FEE_BASIS_POINTS) / BASIS_POINTS_DIVISOR;
-```
-
-#### Execution Steps
-
-* **1% fee** is deducted from the payment amount
-* Fee is sent to the **admin wallet**
-* Remaining **99%** is sent to the **merchant**
-* The temporary payment wallet is destroyed
+- **1%** is deducted from the total payment amount
+- The deducted fee is sent to the **platform wallet**
+- The remaining **99%** is sent to the **merchant**
+- The payment context is finalized after settlement
 
 ---
 
 ### Example
 
 | Payment Amount | Platform Fee (1%) | Merchant Receives |
-| -------------- | ----------------- | ----------------- |
-| 1,000 USDC     | 10 USDC           | 990 USDC          |
+|---------------|------------------|------------------|
+| 1,000 USDC | 10 USDC | 990 USDC |
 
 ---
 
 ## Payout Charges
 
-Payouts occur when funds are withdrawn from a platform-controlled wallet to a merchant’s address.
+Payouts occur when funds are withdrawn from a platform-controlled balance to a merchant’s external wallet.
 
 ---
 
 ### How Payouts Work
 
-```move
-public fun withdraw_to_merchant(...)
-```
-
-1. The payout amount is validated
-2. The platform fee is calculated
-3. Funds are split
-4. Fee is sent to admin
-5. Remaining amount is sent to the destination wallet
+1. A payout request is initiated for a specified amount
+2. The platform validates available balance
+3. OraFi automatically:
+   - Calculates the platform fee
+   - Deducts the fee
+   - Sends the remaining amount to the destination wallet
 
 ---
 
 ### Payout Fee Flow
 
-* **1% fee** is deducted from the payout amount
-* Fee is transferred to the **admin wallet**
-* Remaining amount is transferred to the **merchant**
-* Any leftover balance is returned to the caller
+- **1%** is deducted from the payout amount
+- The fee is sent to the **platform wallet**
+- The remaining balance is transferred to the **merchant**
 
 ---
 
 ### Example
 
 | Payout Amount | Platform Fee (1%) | Merchant Receives |
-| ------------- | ----------------- | ----------------- |
-| 500 USDC      | 5 USDC            | 495 USDC          |
+|--------------|------------------|------------------|
+| 500 USDC | 5 USDC | 495 USDC |
 
 ---
 
@@ -116,24 +101,26 @@ public fun withdraw_to_merchant(...)
 
 ### Refund Behavior
 
-> **Important:**
+- **Refunds are not charged**
+- The full refunded amount is returned to the customer
+- No platform fee is deducted during refunds
 
-* Refunds are not charged
+This ensures fair customer reimbursement and avoids double-charging.
 
 ---
 
-## Summary Table
+## Summary
 
-| Transaction Type | Fee Charged | Fee Rate     | Enforced On-Chain  |
-| ---------------- | ----------- | ------------ | -----------------  |
-| Payment          | Yes         | 1%           | ✅                 |
-| Payout           | Yes         | 1%           | ✅                 |
-| Refund           | Optional    | Not charged  | ❌                 |
+| Transaction Type | Fee Applied | Fee Rate | On-Chain Enforcement |
+|-----------------|-----------|----------|---------------------|
+| Payment | Yes | 1% | ✅ |
+| Payout | Yes | 1% | ✅ |
+| Refund | No | 0% | ❌ |
 
 ---
 
 ## Notes
 
-* All fee calculations use **integer-safe basis points**
-* Only **USDC** is supported in the current implementation
-* Fee rate changes require **contract redeployment** and it will be announced
+- All fees are calculated using **precise integer arithmetic**
+- Only **USDC** is currently supported
+- Any change to the fee rate requires a **protocol update** and will be publicly announced
