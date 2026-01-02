@@ -211,6 +211,150 @@ const transactions = await response.json();
 
 Get specific transaction:
 
+## Filter Parameters
+
+### `type`
+- **Type:** `string`
+- **Allowed Values:** `PAYMENT`, `PAYOUT`, `REFUND`
+- **Description:**  
+  Filters transactions by their transaction type.
+
+---
+
+### `status`
+- **Type:** `string`
+- **Allowed Values:** `PENDING`, `COMPLETED`, `FAILED`
+- **Description:**  
+  Filters transactions based on their current processing status.
+
+---
+
+### `token`
+- **Type:** `string`
+- **Allowed Values:** `USDC`, `BTC`, `ETH`, `EUR`, `USD`
+- **Description:**  
+  Filters transactions by the currency or token used.
+
+---
+
+### `mode`
+- **Type:** `string`
+- **Allowed Values:** `test`, `live`
+- **Optional**
+- **Description:**  
+  Specifies whether the transaction was created in test or live mode.
+
+---
+
+## Date Filtering
+
+### `date`
+- **Type:** `object`
+- **Description:**  
+  Defines how transactions should be filtered by date.  
+  This parameter must be passed as a **JSON-encoded object** when used in query strings.
+
+---
+
+### `date.type`
+- **Type:** `string`
+- **Required**
+- **Allowed Values:** `preset`, `range`
+- **Description:**  
+  Determines whether a predefined date interval or a custom date range is used.
+
+---
+
+### Preset Date Filtering
+
+Used when `date.type = "preset"`.
+
+#### `date.interval`
+- **Type:** `string`
+- **Required**
+- **Allowed Values:**
+  - `today`
+  - `yesterday`
+  - `last7days`
+  - `last30days`
+  - `thisMonth`
+  - `lastMonth`
+  - `thisYear`
+- **Description:**  
+  Applies a predefined time window for filtering transactions.
+
+---
+
+### Custom Date Range Filtering
+
+Used when `date.type = "range"`.
+
+#### `date.startDate`
+- **Type:** `date`
+- **Required**
+- **Description:**  
+  The start date for the transaction query range.
+
+---
+
+#### `date.endDate`
+- **Type:** `date`
+- **Required**
+- **Description:**  
+  The end date for the transaction query range.
+
+---
+
+## Additional Filters
+
+### `paymentLinkId`
+- **Type:** `string`
+- **Description:**  
+  Filters transactions associated with a specific payment link.
+
+---
+
+### `paymentMethod`
+- **Type:** `string`
+- **Allowed Values:** `PAYMENT_LINK`, `HOSTED_CHECKOUT`
+- **Description:**  
+  Filters transactions by the payment method used.
+
+---
+
+### `customerId`
+- **Type:** `string`
+- **Description:**  
+  Filters transactions belonging to a specific customer.
+
+---
+
+## Pagination
+
+### `limit`
+- **Type:** `number`
+- **Default:** `20`
+- **Description:**  
+  Maximum number of transactions returned per request.
+
+---
+
+### `cursor`
+- **Type:** `string`
+- **Description:**  
+  Cursor used for pagination.  
+  When provided, results start after the referenced transaction.
+
+---
+
+## Notes
+
+- The `date` parameter **must be valid JSON** when passed as a query string.
+- Invalid date structures or formats will result in a `400 Bad Request`.
+- Pagination uses **cursor-based pagination** for consistency and performance.
+
+---
+
 ```javascript
 const response = await fetch(`/transactions/${transactionId}`, {
   headers: {
