@@ -1,9 +1,9 @@
 ---
-title: "Payouts API"
+title: "Payouts"
 description: "Examples for payout-related endpoints"
 ---
 
-# Payout Endpoints
+Manage payouts
 
 ## Available Endpoints
 
@@ -136,7 +136,7 @@ This method **requires cryptographic signing** to authorize the payout.
 ---
 
 ```bash
-curl -X POST https://api.orafi.com/transactions/payout/crypto \
+curl -X POST https://api.orafi.com/v1/transactions/payout/crypto \
   -H "Content-Type: application/json" \
   -H "x-api-key: your_api_key" \
   -d '{
@@ -148,7 +148,7 @@ curl -X POST https://api.orafi.com/transactions/payout/crypto \
 ```
 
 ```bash
-curl -X POST https://api.orafi.com/transactions/payout/crypto \
+curl -X POST https://api.orafi.com/v1/transactions/payout/crypto \
   -H "Content-Type: application/json" \
   -H "x-api-key: your_api_key" \
   -d '{

@@ -1,9 +1,7 @@
 ---
-title: "Refund API"
+title: "Refund"
 description: "Process refunds for transactions"
 ---
-
-# Refunds
 
 Refunds allow you to return funds to customers for failed or cancelled transactions.
 
@@ -25,7 +23,7 @@ Create a refund transaction
 - **Type:** `string`
 - **Required**
 - **Description:**  
-  Unique identifier of the original transaction being refunded.
+ Unique identifier of the original transaction being refunded.
 
 ---
 
@@ -47,19 +45,15 @@ Create a refund transaction
 
 ---
 
-```javascript
-const refund = await fetch('/transactions/refund', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'x-api-key': process.env.ORAFI_API_KEY
-  },
-  body: JSON.stringify({
+```bash
+curl - X POST https://api.orafi.com/v1/transactions/refund \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: your_api_key" \
+  -d '{
     originalTxId: 'txn_abc123',
     to: ox2,
     reason: "Customer not satisfied!"
-  })
-});
+  }'
 ```
 **Response:**
 ```json
@@ -90,17 +84,13 @@ const refund = await fetch('/transactions/refund', {
   Unique identifier of the refund transaction.
 
 
-```javascript
-await fetch('/transactions/refund/retry', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'x-api-key': process.env.ORAFI_API_KEY
-  },
-  body: JSON.stringify({
-    refundId: 'refund_abc123'
-  })
-});
+```bash
+curl - X POST https://api.orafi.com/v1/transactions/refund/retry \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: your_api_key" \
+  -d '{
+    refundId: 'txn_abc123'
+  }'
 ```
 **Response:**
 ```json

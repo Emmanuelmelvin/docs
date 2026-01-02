@@ -1,17 +1,15 @@
 ---
-title: "Transactions API"
+title: "Transactions"
 description: "API endpoints for transaction management"
 ---
-
-# Transactions
 
 Transactions represent the complete record of payments, payouts, and refunds in your Orafi account.
 
 ## Available Endpoints
 
 ```http
-GET /transactions # Get all transactions
-GET /transactions/{id} # Get specific transaction
+GET /transactions          # Get all transactions
+GET /transactions/{id}            # Get specific transaction
 ```
 
 ## Transaction Types
@@ -295,14 +293,11 @@ Used when `date.type = "range"`.
 
 ---
 
-```javascript
-const response = await fetch('/transactions', {
-  headers: {
-    'x-api-key': process.env.ORAFI_API_KEY
-  }
-});
 
-const transactions = await response.json();
+```bash
+curl -X GET https://api.orafi.com/v1/transactions \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: your_api_key" 
 ```
 **Response**
 ```json 
@@ -353,18 +348,30 @@ const transactions = await response.json();
   }
 }
 ```
+## Example
+
+```http
+GET /transactions?status=COMPLETED&token=USDC&limit=10
+GET /transactions?date={"type":"preset","interval":"last7days"}
+GET /transactions?date={"type":"range","startDate":"2025-01-01","endDate":"2025-01-31"}
+```
 
 Get specific transaction:
 
+### Parameters
 
-```javascript
-const response = await fetch(`/transactions/${transactionId}`, {
-  headers: {
-    'x-api-key': process.env.ORAFI_API_KEY
-  }
-});
+#### `transactionId`
+  - **Required**  
+  - ***Description*
+  Unique identifier for transaction
+  
+  
 
-const transaction = await response.json();
+
+```bash
+curl -X GET https://api.orafi.com/v1/transactions/${transactionId} \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: your_api_key" 
 ```
 **Response**
 ```json 
@@ -407,11 +414,4 @@ const transaction = await response.json();
             }
   }
 }
-```
-## Example
-
-```http
-GET /transactions?status=COMPLETED&token=USDC&limit=10
-GET /transactions?date={"type":"preset","interval":"last7days"}
-GET /transactions?date={"type":"range","startDate":"2025-01-01","endDate":"2025-01-31"}
 ```

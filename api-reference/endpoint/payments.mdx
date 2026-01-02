@@ -1,5 +1,5 @@
 ---
-title: "Payments API"
+title: "Payments"
 description: "Examples for payment-related endpoints"
 ---
 
@@ -57,7 +57,7 @@ Create a new hosted checkout payment.
 - **Type:** `string`
 - **Required**
 - **Description:**  
-  Unique transaction reference used to track the payment across systems.
+  Unique transaction reference issued by the merchant.
 
 ---
 
@@ -141,7 +141,7 @@ curl -X POST https://api.orafi.com/transactions/payment/verify \
 
 Get detailed payment information.
 
-### Request Body
+### Query Parameter
 
 #### `paymentId`
 - **Type:** `string`

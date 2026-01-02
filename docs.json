@@ -38,6 +38,7 @@
             "group": "Endpoint examples",
             "pages": [
               "api-reference/endpoint/profile",
+              "api-reference/endpoint/mode",
               "api-reference/endpoint/transactions",
               "api-reference/endpoint/payments",
               "api-reference/endpoint/refunds",
