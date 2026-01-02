@@ -11,8 +11,9 @@ Learn how to set up your development environment for safe testing of Orafi integ
 
 Orafi provides separate environments for development and production:
 
-- **Test environment**: `https://test.api.orafi.com`
-- **Live environment**: `https://api.orafi.com`
+- **Test environment**
+- **Live environment**
+Both uses the same API: `https://api.orafi.com`. To toggle between modes, merchants can visit their dashboard, or use proided endpoint.
 
 Use the test environment for all development and testing to avoid real transactions.
 
@@ -20,8 +21,8 @@ Use the test environment for all development and testing to avoid real transacti
 
 You have separate API keys for each environment:
 
-- **Test API Key**: Used for the test environment
-- **Live API Key**: Used for production
+- **Test API Key**: Used for the test environment(testnet)
+- **Live API Key**: Used for production(mainnet)
 
 Keep your live API key secure and never expose it in client-side code.
 
@@ -30,6 +31,7 @@ Keep your live API key secure and never expose it in client-side code.
 ### 1. Use Test Mode for Development
 
 Always develop and test your integration using the test environment first.
+To switch to live,  you must complete the onboarding process
 
 ### 2. Simulate Different Scenarios
 
@@ -48,37 +50,3 @@ Set up webhook endpoints for testing:
 - Verify webhook signatures in test mode
 - Test webhook retry logic
 
-### 4. Go Live Checklist
-
-Before switching to live mode:
-
-- [ ] All tests pass in test environment
-- [ ] Webhooks are properly configured
-- [ ] Business profile is complete
-- [ ] Settlement accounts are set up
-- [ ] API keys are securely stored
-
-## Development Tools
-
-### SDKs and Libraries
-
-We provide official SDKs for popular languages:
-
-- JavaScript/Node.js
-- Python
-- PHP
-- Ruby
-
-### Postman Collection
-
-Import our Postman collection for easy API testing:
-
-[Download Orafi Postman Collection](https://api.orafi.com/postman)
-
-### Sample Applications
-
-Check out our GitHub repository for sample applications:
-
-- E-commerce integration
-- Subscription service
-- Payment gateway

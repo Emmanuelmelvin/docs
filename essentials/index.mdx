@@ -29,21 +29,18 @@ Orafi is a seamless crypto payments API that enables businesses to accept crypto
   <Card
     title="Multiple Cryptocurrencies"
     icon="coins"
-    href="/essentials/payments"
   >
     Support for various cryptocurrencies.
   </Card>
   <Card
     title="Webhook Notifications"
     icon="bell"
-    href="/essentials/webhooks"
   >
     Real-time updates on payment status.
   </Card>
   <Card
     title="Test & Live Modes"
     icon="flask"
-    href="/development"
   >
     Safe testing environment before going live.
   </Card>
@@ -63,8 +60,8 @@ Orafi sits between your application and the blockchain networks. When a customer
 
 1. Your application creates a payment request via Orafi's API
 2. Orafi generates a unique deposit address and transaction details
-3. The customer sends crypto to the provided address
-4. Orafi monitors the blockchain for confirmation
+3. The customer retrives transaction information Orafi's checkout URL and signs payment transaction with their wallet
+4. Checkout URL redirects back to application to verify transaction status
 5. Your application receives webhook notifications about payment status
 6. Funds are settled according to your configuration
 

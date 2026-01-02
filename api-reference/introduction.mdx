@@ -3,10 +3,6 @@ title: 'API Reference'
 description: 'Complete API documentation for Orafi'
 ---
 
-<Note>
-  This section contains auto-generated API documentation from our OpenAPI specification.
-</Note>
-
 ## Getting Started
 
 The Orafi API is organized around REST. Our API has predictable resource-oriented URLs, accepts JSON-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes.
@@ -21,8 +17,7 @@ x-api-key: ora_live_your_api_key_here
 
 ## Base URLs
 
-- **Production**: `https://api.orafi.com`
-- **Test**: `https://test.api.orafi.com`
+- `https://api.orafi.com`
 
 ## Response Format
 
@@ -40,18 +35,6 @@ All responses follow a consistent format:
 
 Errors return appropriate HTTP status codes with error details:
 
-```json
-{
-  "success": false,
-  "message": "Error description",
-  "errors": [
-    {
-      "field": "amount",
-      "message": "Amount must be positive"
-    }
-  ]
-}
-```
 
 ## Rate Limiting
 
@@ -61,18 +44,9 @@ API requests are rate limited. Check the response headers for limit information:
 - `X-RateLimit-Remaining`: Remaining requests
 - `X-RateLimit-Reset`: Time when limit resets
 
-## SDKs & Libraries
-
-We provide official SDKs for popular languages:
-
-- [JavaScript SDK](https://github.com/orafi/js-sdk)
-- [Python SDK](https://github.com/orafi/python-sdk)
-- [PHP SDK](https://github.com/orafi/php-sdk)
-
 ## Support
 
 Need help? Contact our support team:
 
 - **Email**: support@orafi.com
 - **Documentation**: [docs.orafi.com](https://docs.orafi.com)
-- **Status Page**: [status.orafi.com](https://status.orafi.com)

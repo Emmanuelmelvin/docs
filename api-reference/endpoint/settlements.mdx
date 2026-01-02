@@ -1,6 +1,22 @@
+---
+title: "Settlements API"
+description: "API endpoints for settlement account management"
+---
+
 # Settlements
 
 Settlement accounts are where you receive payouts from Orafi.
+
+## Available Endpoints
+
+- POST /settlement/crypto/add - Adding Crypto Accounts
+- GET /settlement/crypto - Retrieving Crypto Accounts
+- DELETE /settlement/crypto/delete/{id} - Deleting Crypto Accounts
+- GET /settlement/fiat/bank-list - Getting Bank List
+- POST /settlement/fiat/add - Adding Fiat Accounts
+- GET /settlement/fiat - Get Fiat Accounts
+- PATCH /settlement/fiat/{id} - Update Fiat Account
+- DELETE /settlement/fiat/{id} - Delete Fiat Account
 
 ## Crypto Settlements
 

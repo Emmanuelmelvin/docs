@@ -1,0 +1,266 @@
+---
+title: "Transactions API"
+description: "API endpoints for transaction management"
+---
+
+# Transactions
+
+Transactions represent the complete record of payments, payouts, and refunds in your Orafi account.
+
+## Available Endpoints
+
+- GET /transactions - Get all transactions
+- GET /transactions/{id} - Get specific transaction
+
+## Transaction Types
+
+- **Payment**: Customer payments (incoming)
+- **Payout**: Funds sent to you (outgoing)
+- **Refund**: Returns to customers
+
+## Transaction Object
+
+The `Transaction` model represents a single financial event in the system.  
+It is used for payments, payouts, refunds, and other monetary operations.  
+Each transaction records its lifecycle, monetary value, currency token, and ownership context.
+
+---
+
+## Fields
+
+### `id`
+- **Type:** `String`
+- **Primary Key**
+- **Default:** `cuid()`
+- **Database Field:** `_id`
+- **Description:**  
+  Unique identifier for the transaction.
+
+---
+
+### `type`
+- **Type:** `TransactionType`
+- **Description:**  
+  Specifies the kind of transaction (e.g. payment, payout, refund).
+
+---
+
+### `status`
+- **Type:** `TransactionStatus`
+- **Default:** `PENDING`
+- **Description:**  
+  Current state of the transaction lifecycle, such as pending, completed, or failed.
+
+---
+
+### `amount`
+- **Type:** `Float`
+- **Description:**  
+  Monetary value of the transaction, expressed in the smallest unit of the selected token.
+
+---
+
+### `mode`
+- **Type:** `Mode`
+- **Description:**  
+  Indicates how the transaction was initiated (for example: live or test).
+
+---
+
+### `token`
+- **Type:** `Token`
+- **Default:** `USDC`
+- **Description:**  
+  Currency or digital asset used for the transaction.
+
+---
+
+### `createdAt`
+- **Type:** `DateTime`
+- **Default:** `now()`
+- **Description:**  
+  Timestamp indicating when the transaction record was created.
+
+---
+
+### `confirmedAt`
+- **Type:** `DateTime?`
+- **Nullable**
+- **Description:**  
+  Timestamp indicating when the transaction was confirmed or finalized.
+
+---
+
+### `date`
+- **Type:** `DateTime`
+- **Default:** `now()`
+- **Description:**  
+  Logical transaction date, used for reporting and reconciliation.
+
+---
+
+### `profileId`
+- **Type:** `String`
+- **Description:**  
+  Identifier of the business profile that owns this transaction.
+
+---
+
+### `customerId`
+- **Type:** `String?`
+- **Nullable**
+- **Description:**  
+  Identifier of the customer associated with the transaction, if applicable.
+
+---
+
+### `webhookDeliveryId`
+- **Type:** `String?`
+- **Nullable**
+- **Description:**  
+  Optional identifier linking the transaction to webhook delivery tracking.
+
+---
+
+## Relationships (High-Level)
+
+> These relationships exist for ownership and traceability but are not required for basic transaction reads.
+
+- **Business Profile**  
+  Each transaction belongs to a single business profile.
+
+- **Customer (Optional)**  
+  A transaction may be associated with a customer.
+
+- **Payment / Payout / Refund**  
+  A transaction can be linked to **one** of these entities depending on its type.
+
+- **Webhook Deliveries**  
+  Tracks webhook notifications related to the transaction lifecycle.
+
+---
+
+## Notes
+
+- The `Transaction` model is **the single source of truth** for financial events.
+- Related entities (payment, payout, refund) extend the transaction but do not replace it.
+- Status and timestamps should be used to determine transaction finality.
+
+## Retrieving Transactions
+
+Get all transactions:
+
+```javascript
+const response = await fetch('/transactions', {
+  headers: {
+    'x-api-key': process.env.ORAFI_API_KEY
+  }
+});
+
+const transactions = await response.json();
+```
+**Response**
+```json 
+{
+  "success": true,
+  "message": "Transactions retrieved successfully",
+  "data": {
+    "transactions": [
+      {
+        "id":"cmjr6iwo60004v84wdnwm7qub",
+        "type":"REFUND",
+        "status":"FAILED",
+        "amount":200,
+        "mode":"test",
+        "createdAt":"2025-12-29T13:13:41.094Z",
+        "confirmedAt":null,
+        "token":"USDC",
+        "date":"2025-12-29T13:13:41.094Z",
+        "profileId":"84a9f045-8a21-4ce4-a7a0-828265c0021b",
+        "customerId":"cmj6esbky0000v83kibbrjxwp",
+        "webhookDeliveryId":null,
+        "customer":{
+          "id":"cmj6esbky0000v83kibbrjxwp",
+          "firstname":"Melvin",
+          "lastname":"Charles",
+          "email":"emmae@orafi.app",
+          "mode":["test"],
+          "totalSpent":0
+          },
+          "payment":null,
+          "payout":null,
+          "refund":{
+            "id":"cmjr6ixla0005v84wlfust2mn",
+            "amount":"200",
+            "status":"FAILED",
+            "reason":"Customer not satisfied!",
+            "walletAddress":"0xc9f89b41c8e9a4f1d1cf16477500cc303fe9720f5c3b55211d4694a5ebcd1ad9",
+            "originalTxId":"cmjlzeq0j0001v83g2cuplnbg",
+            "txDigest":"2MHzMhPtCA5jR29CN2RmEq2hizi2vnU7jCMTq2jJ9ttY",
+            "customerId":"cmj6esbky0000v83kibbrjxwp",
+            "transactionId":"cmjr6iwo60004v84wdnwm7qub"
+            }
+      }
+    ],
+    count: 1,
+    nextCursor: "xxx",
+    hasNextPage: false
+  }
+}
+```
+
+Get specific transaction:
+
+```javascript
+const response = await fetch(`/transactions/${transactionId}`, {
+  headers: {
+    'x-api-key': process.env.ORAFI_API_KEY
+  }
+});
+
+const transaction = await response.json();
+```
+**Response**
+```json 
+{
+  "success": true,
+  "message": "Transactions retrieved successfully",
+  "data": {
+      {
+        "id":"cmjr6iwo60004v84wdnwm7qub",
+        "type":"REFUND",
+        "status":"FAILED",
+        "amount":200,
+        "mode":"test",
+        "createdAt":"2025-12-29T13:13:41.094Z",
+        "confirmedAt":null,
+        "token":"USDC",
+        "date":"2025-12-29T13:13:41.094Z",
+        "profileId":"84a9f045-8a21-4ce4-a7a0-828265c0021b",
+        "customerId":"cmj6esbky0000v83kibbrjxwp",
+        "webhookDeliveryId":null,
+        "customer":{
+          "id":"cmj6esbky0000v83kibbrjxwp",
+          "firstname":"Melvin",
+          "lastname":"Charles",
+          "email":"emmae@orafi.app",
+          "mode":["test"],
+          "totalSpent":0
+          },
+          "payment":null,
+          "payout":null,
+          "refund":{
+            "id":"cmjr6ixla0005v84wlfust2mn",
+            "amount":"200",
+            "status":"FAILED",
+            "reason":"Customer not satisfied!",
+            "walletAddress":"0xc9f89b41c8e9a4f1d1cf16477500cc303fe9720f5c3b55211d4694a5ebcd1ad9",
+            "originalTxId":"cmjlzeq0j0001v83g2cuplnbg",
+            "txDigest":"2MHzMhPtCA5jR29CN2RmEq2hizi2vnU7jCMTq2jJ9ttY",
+            "customerId":"cmj6esbky0000v83kibbrjxwp",
+            "transactionId":"cmjr6iwo60004v84wdnwm7qub"
+            }
+      }
+  }
+}
+```

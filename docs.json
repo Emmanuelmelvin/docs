@@ -7,7 +7,7 @@
   "light": "#60A5FA",
   "dark": "#1E40AF"
 },
-  "favicon": "./logos/image-logo.png",
+  "favicon": "./logos/logo-svg.png",
   "navigation": {
     "tabs": [
       {
@@ -16,27 +16,11 @@
           {
             "group": "Getting started",
             "pages": [
-              "index",
-              "quickstart",
-              "development"
-            ]
-          },
-          {
-            "group": "API essentials",
-            "pages": [
+              "essentials/index",
+              "essentials/quickstart",
+              "essentials/development",
               "essentials/authentication",
-              "essentials/webhooks",
-              "essentials/errors",
-              "essentials/testing"
-            ]
-          },
-          {
-            "group": "Operations",
-            "pages": [
-              "essentials/payments",
-              "essentials/paylinks",
-              "essentials/payouts",
-              "essentials/refunds"
+              "essentials/errors"
             ]
           }
         ]
@@ -56,6 +40,12 @@
               "api-reference/endpoint/payments",
               "api-reference/endpoint/paylinks",
               "api-reference/endpoint/payouts",
+              "api-reference/endpoint/webhooks",
+              "api-reference/endpoint/customers",
+              "api-reference/endpoint/profile",
+              "api-reference/endpoint/refunds",
+              "api-reference/endpoint/transactions",
+              "api-reference/endpoint/settlements",
               "api-reference/endpoint/webhooks"
             ]
           }

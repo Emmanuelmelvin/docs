@@ -3,7 +3,6 @@ title: "Errors & Retries"
 description: "Handle errors and implement retry logic properly"
 ---
 
-# Errors & Retries
 
 Understanding how Orafi handles errors and implementing proper retry logic is crucial for building reliable integrations.
 
@@ -27,8 +26,8 @@ Understanding how Orafi handles errors and implementing proper retry logic is cr
 
 ### Payment Failures
 
-- **Insufficient funds**: Customer sent less than required amount
-- **Network congestion**: High fees or slow confirmation
+- **Insufficient funds**: Merchant request to refund or payout above current balance
+- **Network congestion**: On-chain network
 - **Expired payment**: Payment not completed within 24 hours
 - **Invalid address**: Incorrect deposit address used
 
@@ -48,7 +47,7 @@ Use transaction references (`txRef`) as idempotency keys. Duplicate requests wit
 async function createPaymentWithRetry(paymentData, maxRetries = 3) {
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
-      const response = await fetch('/transactions/payment/hosted/create', {
+      const response = await fetch('/transactions/payment/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -134,29 +133,3 @@ async function verifyPaymentWithRetry(paymentId, maxRetries = 5) {
   }
 }
 ```
-
-## Error Response Format
-
-All errors follow this consistent format:
-
-```json
-{
-  "success": false,
-  "message": "Detailed error message",
-  "errors": [
-    {
-      "field": "amount",
-      "message": "Amount must be greater than 0"
-    }
-  ]
-}
-```
-
-## Best Practices
-
-1. **Log errors**: Always log errors with context
-2. **Monitor failures**: Set up alerts for high error rates
-3. **Graceful degradation**: Handle failures without breaking user experience
-4. **User communication**: Inform users of payment issues clearly
-5. **Retry limits**: Don't retry indefinitely
-6. **Circuit breakers**: Stop retrying if service is down

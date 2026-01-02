@@ -9,23 +9,23 @@ Welcome to Orafi! This guide will help you get up and running with your first cr
 
 ## Account Creation
 
-1. Sign up for an Orafi account at [orafi.com](https://orafi.com)
-2. Complete your business profile and verification
+1. Sign up for an Orafi account at [orafi.com](https://auth.orafi.com)
+2. Complete your business profile and onoarding processes
 3. Generate your API keys from the dashboard
 
 ## API Key Usage
 
 Orafi uses API keys for authentication. You have separate keys for test and live modes.
 
-- **Test mode**: For development and testing
-- **Live mode**: For production payments
+- **Test mode**: For development and testing(testnet)
+- **Live mode**: For production payments(mainnet)
 
 Include your API key in the `x-api-key` header for all requests.
 
 ## Test vs Live Environments
 
-- **Test environment**: `https://test.api.orafi.com`
-- **Live environment**: `https://api.orafi.com`
+- **Endpoint**: `https://api.orafi.com`
+Both uses same API
 
 Use test mode for development to avoid real transactions.
 
@@ -36,7 +36,7 @@ Let's create your first payment using curl.
 ### 1. Create a hosted payment
 
 ```bash
-curl -X POST https://test.api.orafi.com/transactions/payment/hosted/create \
+curl -X POST https://api.orafi.com/transactions/payment/create \
   -H "Content-Type: application/json" \
   -H "x-api-key: your_test_api_key" \
   -d '{
@@ -51,7 +51,7 @@ curl -X POST https://test.api.orafi.com/transactions/payment/hosted/create \
   }'
 ```
 
-This creates a payment for $100.00 (assuming amount is in cents) and returns payment details including a deposit address.
+This creates a payment for and returns payment details including a deposit address.
 
 ### 2. Check payment status
 
@@ -63,26 +63,6 @@ curl -X POST https://test.api.orafi.com/transactions/payment/verify \
   }'
 ```
 
-### Response
-
-```json
-{
-  "success": true,
-  "message": "Payment verified successfully",
-  "data": {
-    "id": "pay_abc123",
-    "amount": 10000,
-    "amountInUSDC": 10.0,
-    "token": "USDC",
-    "depositAddress": "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
-    "txRef": "tx_123456789",
-    "status": "INITIALIZED",
-    "paymentMethod": "HOSTED_CHECKOUT",
-    "customerId": "cus_xyz789",
-    "transactionId": "txn_def456"
-  }
-}
-```
 
 ## Next Steps
 
