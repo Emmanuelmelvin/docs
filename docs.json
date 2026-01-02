@@ -20,7 +20,8 @@
               "essentials/quickstart",
               "essentials/development",
               "essentials/authentication",
-              "essentials/errors"
+              "essentials/errors",
+              "essentials/fees"
             ]
           }
         ]

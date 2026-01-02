@@ -1,0 +1,139 @@
+
+---
+title: Fee Collection & Charges
+description: How platform charges are collected for payments, payouts, and refunds based on the OraFi smart contract.
+---
+
+## Overview
+
+OraFi collects platform charges directly at the **smart contract level** using a **basis-points fee model**.  
+Fees are deducted automatically during payment and payout execution and transferred to the platform admin wallet.
+
+All logic described here is enforced **on-chain** and cannot be bypassed.
+
+---
+
+## Fee Configuration
+
+```move
+const FEE_BASIS_POINTS: u64 = 100;
+const BASIS_POINTS_DIVISOR: u64 = 10000;
+````
+
+* **Fee Rate:** `100 / 10,000 = 1%`
+* Fees are calculated using **basis points** for precision.
+* Fees are always deducted **before funds reach the merchant**.
+
+---
+
+## Admin Fee Wallet
+
+```move
+const ADMIN_PUBLIC_KEY: address = @0x9970...f7f1;
+```
+
+* All platform fees are transferred directly to the **admin address**.
+* Fee transfers happen atomically within the same transaction.
+
+---
+
+## Payment Charges
+
+### How Payments Work
+
+1. A **payment wallet** is generated for a merchant with an expected amount.
+2. The customer sends **exactly the required USDC amount**.
+3. The contract:
+
+   * Validates the amount
+   * Calculates the platform fee
+   * Splits the funds
+   * Transfers fees and merchant funds
+
+---
+
+### Payment Fee Flow
+
+```move
+let fee_amount = (amount * FEE_BASIS_POINTS) / BASIS_POINTS_DIVISOR;
+```
+
+#### Execution Steps
+
+* **1% fee** is deducted from the payment amount
+* Fee is sent to the **admin wallet**
+* Remaining **99%** is sent to the **merchant**
+* The temporary payment wallet is destroyed
+
+---
+
+### Example
+
+| Payment Amount | Platform Fee (1%) | Merchant Receives |
+| -------------- | ----------------- | ----------------- |
+| 1,000 USDC     | 10 USDC           | 990 USDC          |
+
+---
+
+## Payout Charges
+
+Payouts occur when funds are withdrawn from a platform-controlled wallet to a merchant’s address.
+
+---
+
+### How Payouts Work
+
+```move
+public fun withdraw_to_merchant(...)
+```
+
+1. The payout amount is validated
+2. The platform fee is calculated
+3. Funds are split
+4. Fee is sent to admin
+5. Remaining amount is sent to the destination wallet
+
+---
+
+### Payout Fee Flow
+
+* **1% fee** is deducted from the payout amount
+* Fee is transferred to the **admin wallet**
+* Remaining amount is transferred to the **merchant**
+* Any leftover balance is returned to the caller
+
+---
+
+### Example
+
+| Payout Amount | Platform Fee (1%) | Merchant Receives |
+| ------------- | ----------------- | ----------------- |
+| 500 USDC      | 5 USDC            | 495 USDC          |
+
+---
+
+## Refund Charges
+
+### Refund Behavior
+
+> **Important:**
+
+* Refunds are not charged
+
+---
+
+## Summary Table
+
+| Transaction Type | Fee Charged | Fee Rate     | Enforced On-Chain  |
+| ---------------- | ----------- | ------------ | -----------------  |
+| Payment          | Yes         | 1%           | ✅                 |
+| Payout           | Yes         | 1%           | ✅                 |
+| Refund           | Optional    | Not charged  | ❌                 |
+
+---
+
+## Notes
+
+* All fee calculations use **integer-safe basis points**
+* Only **USDC** is supported in the current implementation
+* Fee rate changes require **contract redeployment** and it will be announced

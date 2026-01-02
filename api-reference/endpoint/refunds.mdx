@@ -8,8 +8,8 @@ Refunds allow you to return funds to customers for failed or cancelled transacti
 ## Available Endpoints
 
 ```http
-POST /transactions/refund        # Creating Refunds
-POST /transactions/refund/retry  # Retrying Failed Refunds
+POST /transactions/refund               # Creating Refunds
+POST /transactions/refund/retry         # Retrying Failed Refunds
 ```
 
 
@@ -102,9 +102,9 @@ curl - X POST https://api.orafi.com/v1/transactions/refund/retry \
         "amount": 200,
         "txDigest": "xxx",
         "executionTime": 2101,
-        gasFee: 0.0001,
-        platformFee: null,
-        amountSent: 0.18,
+        "gasFee": 0.0001,
+        "platformFee": null,
+        "amountSent": 0.18,
     }
 }
 ```
