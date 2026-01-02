@@ -7,18 +7,13 @@ Customers represent your buyers in the Orafi system.
 
 ## Available Endpoints
 
-```json
+```http
 POST /customers/create        # Creating Customers
 GET /customers                # Get all customers
 GET /customers/{id}           # Get specific customer
 DELETE /customers/{id}        # Deleting Customers
 ```
 
-## Customer Object 
-
-Perfect — here it is rewritten **exactly in that pattern**, applied to the **Customer** model, with consistent tone, structure, and depth.
-
----
 
 ## Customer Object
 
@@ -31,7 +26,7 @@ A customer may exist in **test**, **live**, or both environments and can be link
 
 ### Fields
 
-### `id`
+#### `id`
 
 * **Type:** `String`
 * **Primary Key**
@@ -333,7 +328,7 @@ Get specific customer:
 #### `customerId`
   - **Type**: string
   - **Required**
-  - ***Description*: 
+  - **Description**: 
   Unique identifier for a customer.
 
 ```bash

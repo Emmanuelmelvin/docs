@@ -46,7 +46,7 @@
               "api-reference/endpoint/payouts",
               "api-reference/endpoint/paylinks",
               "api-reference/endpoint/customers",
-              "api-reference/endpoint/settlements",
+              "api-reference/endpoint/crypto-settlements",
               "api-reference/endpoint/webhooks"
             ]
           }
