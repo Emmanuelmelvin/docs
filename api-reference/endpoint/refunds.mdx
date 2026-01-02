@@ -1,5 +1,5 @@
 ---
-title: "Refunds"
+title: "Refund API"
 description: "Process refunds for transactions"
 ---
 
@@ -62,21 +62,30 @@ const refund = await fetch('/transactions/refund', {
 ```json
 {
     "success": true,
-    "message": "Refund Payout initiated successfully",
+    "message": "Refund initiated successfully",
     "data": {
         "status": "COMPLETED",
         "amount": 200,
         "txDigest": "xxx",
         "executionTime": 2101,
-        gasFee: 0.0001,
-        platformFee: null,
-        amountSent: 0.18,
+        "gasFee": 0.0001,
+        "platformFee": null,
+        "amountSent": 0.18,
     }
 }
 ```
 
 
 ## Retrying Failed Refunds
+
+### Request Body
+
+#### `refundId`
+- **Type:** `string`
+- **Required**
+- **Description:**  
+  Unique identifier of the refund transaction.
+
 
 ```javascript
 await fetch('/transactions/refund/retry', {
