@@ -7,7 +7,7 @@ description: "Examples for payment-related endpoints"
 
 ## Available Endpoints
 
-- POST /transactions/payment/hosted/create - Create Hosted Payment
+- POST /transactions/payment/create - Create Hosted Payment
 - POST /transactions/payment/verify - Verify Payment
 - GET /transactions/payment/retrieve - Retrieve Payment
 
@@ -15,8 +15,60 @@ description: "Examples for payment-related endpoints"
 
 Create a new hosted checkout payment.
 
+### Request Body
+
+#### `amount`
+- **Type:** `number`
+- **Required**
+- **Minimum:** `1`
+- **Description:**  
+  Amount to be charged for the payment(In naira).
+
+---
+
+#### `customer`
+- **Type:** `object`
+- **Required**
+- **Description:**  
+  Customer information associated with the payment.
+
+---
+
+#### `customer.fullname`
+- **Type:** `string`
+- **Required**
+- **Description:**  
+  Full name of the customer making the payment.
+
+---
+
+#### `customer.email`
+- **Type:** `string`
+- **Required**
+- **Format:** `email`
+- **Description:**  
+  Email address of the customer.
+
+---
+
+#### `txRef`
+- **Type:** `string`
+- **Required**
+- **Description:**  
+  Unique transaction reference used to track the payment across systems.
+
+---
+
+#### `redirectUrl`
+- **Type:** `string`
+- **Optional**
+- **Description:**  
+  URL to redirect the customer to after payment completion.
+
+---
+
 ```bash
-curl -X POST https://api.orafi.com/transactions/payment/hosted/create \
+curl -X POST https://api.orafi.com/transactions/payment/create \
   -H "Content-Type: application/json" \
   -H "x-api-key: your_api_key" \
   -d '{
@@ -34,20 +86,34 @@ curl -X POST https://api.orafi.com/transactions/payment/hosted/create \
 **Response:**
 ```json
 {
-  "success": true,
-  "data": {
-    "id": "pay_abc123",
-    "amount": 10000,
-    "depositAddress": "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
-    "status": "INITIALIZED",
-    "checkoutUrl": "https://pay.orafi.com/checkout/pay_abc123"
-  }
+    "success": true,
+    "message": "Payment created successfully",
+    "data": {
+            "payment": {
+                "id": "cmjw65j510001v81cilq0u13v",
+                "depositAddress": "0x02c3624325d9db01b64466dfd90f5cd7adeca13504f1c47638ecd4a076982f66",
+                "amount": 200,
+                "amountInUSDC": 0.1384402540842418,
+                "redirectUrl": "https://mystore.com/purchase/xxxxx"
+            }
+        },
+        "checkoutUrl": "https://checkout.orafi.app/cmjw65j4z0000v81c16vtqj14"
 }
 ```
 
 ## Verify Payment
 
 Check the status of a payment.
+
+### Request Body
+
+#### `paymentId`
+- **Type:** `string`
+- **Required**
+- **Description:**  
+  Payment transaction identifier.
+
+---
 
 ```bash
 curl -X POST https://api.orafi.com/transactions/payment/verify \
@@ -60,13 +126,12 @@ curl -X POST https://api.orafi.com/transactions/payment/verify \
 **Response:**
 ```json
 {
-  "success": true,
-  "data": {
-    "id": "pay_abc123",
-    "status": "CONFIRMED",
-    "amount": 10000,
-    "txRef": "order_12345"
-  }
+    "success": true,
+    "message": "Payment verification completed",
+    "data": {
+        "status": "completed",
+        "paymentId": "cmjlzeq0j0001v83g2cuplnbg"
+    }
 }
 ```
 
@@ -74,7 +139,30 @@ curl -X POST https://api.orafi.com/transactions/payment/verify \
 
 Get detailed payment information.
 
+### Request Body
+
+#### `paymentId`
+- **Type:** `string`
+- **Required**
+- **Description:**  
+  Payment transaction identifier.
+
 ```bash
-curl -X GET "https://api.orafi.com/transactions/payment/retrieve?payment_id=pay_abc123" \
+curl -X GET "https://api.orafi.com/transactions/payment/retrieve?paymentId=pay_abc123" \
   -H "x-api-key: your_api_key"
+```
+
+**Response:**
+```json
+{
+    "success": true,
+    "message": "Payment information retrieved successfully!",
+    "data": {
+        "id": "cmjw65j510001v81cilq0u13v",
+        "depositAddress": "0x02c3624325d9db01b64466dfd90f5cd7adeca13504f1c47638ecd4a076982f66",
+        "amount": 200,
+        "amountInUSDC": 0.1384402540842418,
+        "redirectUrl": "https://mystore.com/purchase/xxxxx?oratx=cmjw65j4z0000v81c16vtqj14"
+    }
+}
 ```

@@ -14,6 +14,36 @@ Refunds allow you to return funds to customers for failed or cancelled transacti
 
 ## Creating Refunds
 
+Create a refund transaction
+
+### Request Body
+
+#### `originalTxId`
+- **Type:** `string`
+- **Required**
+- **Description:**  
+  Unique identifier of the original transaction being refunded.
+
+---
+
+#### `to`
+- **Type:** `string`
+- **Required**
+- **Length:** `66` characters
+- **Description:**  
+  Destination address where the refunded amount will be sent.  
+  Must be a valid address matching the supported blockchain format.
+
+---
+
+#### `reason`
+- **Type:** `string`
+- **Optional**
+- **Description:**  
+  Optional note explaining the reason for the refund.
+
+---
+
 ```javascript
 const refund = await fetch('/transactions/refund', {
   method: 'POST',
@@ -22,11 +52,29 @@ const refund = await fetch('/transactions/refund', {
     'x-api-key': process.env.ORAFI_API_KEY
   },
   body: JSON.stringify({
-    transactionId: 'txn_abc123',
-    amount: 5000
+    originalTxId: 'txn_abc123',
+    to: ox2,
+    reason: "Customer not satisfied!"
   })
 });
 ```
+**Response:**
+```json
+{
+    "success": true,
+    "message": "Refund Payout initiated successfully",
+    "data": {
+        "status": "COMPLETED",
+        "amount": 200,
+        "txDigest": "xxx",
+        "executionTime": 2101,
+        gasFee: 0.0001,
+        platformFee: null,
+        amountSent: 0.18,
+    }
+}
+```
+
 
 ## Retrying Failed Refunds
 
@@ -42,22 +90,19 @@ await fetch('/transactions/refund/retry', {
   })
 });
 ```
-
-## Refund Schema
-
+**Response:**
 ```json
 {
-  "id": "refund_abc123",
-  "amount": 5000,
-  "status": "CONFIRMED",
-  "transactionId": "txn_xyz789"
+    "success": true,
+    "message": "Refund Payout initiated successfully",
+    "data": {
+        "status": "COMPLETED",
+        "amount": 200,
+        "txDigest": "xxx",
+        "executionTime": 2101,
+        gasFee: 0.0001,
+        platformFee: null,
+        amountSent: 0.18,
+    }
 }
 ```
-
-## Best Practices
-
-1. **Policy clarity**: Define refund policies clearly
-2. **Amount limits**: Don't refund more than original payment
-3. **Reason tracking**: Record refund reasons
-4. **Customer communication**: Notify customers of refunds
-5. **Fee consideration**: Account for refund processing fees
