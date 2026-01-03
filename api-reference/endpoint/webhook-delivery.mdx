@@ -140,6 +140,96 @@ Each delivery record provides full visibility into what was sent, when it was se
 ---
 ## Get Webhook Deliveries
 
+## Query Parameters 
+
+### Query Parameters
+
+#### `status`
+
+* **Type:** `string`
+* **Allowed Values:** `PENDING`, `COMPLETED`, `FAILED`
+* **Description:**
+  Filters webhook deliveries by their delivery status.
+
+---
+
+#### `transactionId`
+
+* **Type:** `string`
+* **Description:**
+  Returns webhook deliveries associated with a specific transaction.
+
+---
+
+#### `event`
+
+* **Type:** `string`
+* **Allowed Values:**
+
+  * `payment.failed`
+  * `payment.success`
+* **Description:**
+  Filters webhook deliveries by the event that triggered the delivery.
+
+---
+
+#### `date`
+
+* **Type:** `object` (JSON-encoded)
+* **Optional**
+* **Description:**
+  Filters webhook deliveries within a specific date range.
+  This parameter **must be sent as a JSON string**.
+
+##### `date.startDate`
+
+* **Type:** `date`
+* **Description:**
+  Start of the date range (inclusive).
+
+##### `date.endDate`
+
+* **Type:** `date`
+* **Description:**
+  End of the date range (inclusive).
+
+---
+
+### Correct Example Endpoints
+
+**Filter by status and event**
+
+```http
+GET /webhooks/deliveries?status=FAILED&event=payment.failed
+```
+
+**Filter by date (start date only)**
+
+```http
+GET /webhooks/deliveries?date={"startDate":"2024-01-01"}
+```
+
+**Filter by date range**
+
+```http
+GET /webhooks/deliveries?date={"startDate":"2024-01-01","endDate":"2024-01-31"}
+```
+
+**Combined filters**
+
+```http
+GET /webhooks/deliveries?status=FAILED&event=payment.failed&date={"startDate":"2024-01-01","endDate":"2024-01-31"}
+```
+
+---
+
+### Important Notes
+
+* The `date` parameter **must be valid JSON**
+* Invalid JSON will result in a **400 Bad Request**
+* Partial ranges are allowed (`startDate` only or `endDate` only)
+* Always URL-encode the `date` object in production requests
+
 Retrieve webhook deliveries.
 
 ```bash
