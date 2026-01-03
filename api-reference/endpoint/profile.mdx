@@ -131,7 +131,7 @@ Each user can have **one business profile**, which controls whether operations a
 ## Retrieving Profile
 
 ```bash
-curl -X GET https://api.orafi.com/v1/profile \
+curl -X GET https://api.orafi.app/v1/profile \
   -H "Content-Type: application/json" \
   -H "x-api-key: your_api_key" 
 ```
@@ -179,7 +179,7 @@ Request email change:
   Merchant's new email address
 
 ```bash
-curl -X GET https://api.orafi.com/v1/profile/request-email-change \
+curl -X GET https://api.orafi.app/v1/profile/request-email-change \
   -H "Content-Type: application/json" \
   -H "x-api-key: your_api_key" 
   -d '{
@@ -204,7 +204,7 @@ Verify email change:
   One-time password sent to new email address.
 
 ```bash
-curl -X GET https://api.orafi.com/v1/profile/verify-email-change \
+curl -X GET https://api.orafi.app/v1/profile/verify-email-change \
   -H "Content-Type: application/json" \
   -H "x-api-key: your_api_key" 
   -d '{

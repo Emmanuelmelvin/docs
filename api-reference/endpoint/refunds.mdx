@@ -46,11 +46,11 @@ Create a refund transaction
 ---
 
 ```bash
-curl - X POST https://api.orafi.com/v1/transactions/refund \
+curl - X POST https://api.orafi.app/v1/transactions/refund \
   -H "Content-Type: application/json" \
   -H "x-api-key: your_api_key" \
   -d '{
-    originalTxId: 'txn_abc123',
+    originalTxId: {originalTxId},
     to: ox2,
     reason: "Customer not satisfied!"
   }'
@@ -85,11 +85,11 @@ curl - X POST https://api.orafi.com/v1/transactions/refund \
 
 
 ```bash
-curl - X POST https://api.orafi.com/v1/transactions/refund/retry \
+curl - X POST https://api.orafi.app/v1/transactions/refund/retry \
   -H "Content-Type: application/json" \
   -H "x-api-key: your_api_key" \
   -d '{
-    refundId: 'txn_abc123'
+    refundId: {refundId}
   }'
 ```
 **Response:**

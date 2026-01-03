@@ -25,7 +25,7 @@ Crypto accounts act as **trusted payout destinations** once linked to a profile.
 
 ### Fields
 
-### `id`
+#### `id`
 
 * **Type:** `String`
 * **Primary Key**
@@ -106,7 +106,7 @@ Crypto accounts act as **trusted payout destinations** once linked to a profile.
 Adding a crypto account
 
 ```bash
-curl -X POST https://api.orafi.com/v1/settlement/crypto \
+curl -X POST https://api.orafi.app/v1/settlement/crypto \
   -H "Content-Type: application/json" \
   -H "x-api-key: your_api_key" \
   -d '{
@@ -128,7 +128,7 @@ curl -X POST https://api.orafi.com/v1/settlement/crypto \
 ### Retrieving Accounts
 
 ```bash
-curl -X GET https://api.orafi.com/v1/settlement/crypto \
+curl -X GET https://api.orafi.app/v1/settlement/crypto \
   -H "x-api-key: your_api_key" \
 ```
 **Response**
@@ -164,7 +164,7 @@ curl -X GET https://api.orafi.com/v1/settlement/crypto \
 ---
 
 ```bash
-curl -X DELETE https://api.orafi.com/v1/settlement/crypto \
+curl -X DELETE https://api.orafi.app/v1/settlement/crypto \
   -H "Content-Type: application/json" \
   -H "x-api-key: your_api_key" \
 ```

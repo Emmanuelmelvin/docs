@@ -122,7 +122,7 @@ Create a new paylink with product details.
     Amount to be paid when the paylink is used.
 
 ```bash
-curl -X POST https://api.orafi.com/v1/paylink/create \
+curl -X POST https://api.orafi.app/v1/paylink/create \
   -H "x-api-key: your_api_key"
   -F 'payload={
     "title": "Chidi and Co.",
@@ -162,7 +162,7 @@ Retrieve paylink information.
   Unique identifier for payment link
 
 ```bash
-curl -X GET https://api.orafi.com/v1.paylink/paylink_abc123 \
+curl -X GET https://api.orafi.app/v1.paylink/paylink_abc123 \
   -H "x-api-key: your_api_key"
 ```
 
@@ -188,7 +188,7 @@ curl -X GET https://api.orafi.com/v1.paylink/paylink_abc123 \
 Get all your paylinks.
 
 ```bash
-curl -X GET https://api.orafi.com/paylink \
+curl -X GET https://api.orafi.app/paylink \
   -H "x-api-key: your_api_key"
 ```
 

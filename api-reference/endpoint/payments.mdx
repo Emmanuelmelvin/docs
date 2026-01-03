@@ -68,7 +68,7 @@ Create a new hosted checkout payment.
 ---
 
 ```bash
-curl -X POST https://api.orafi.com/transactions/payment/create \
+curl -X POST https://api.orafi.app/transactions/payment/create \
   -H "Content-Type: application/json" \
   -H "x-api-key: your_api_key" \
   -d '{
@@ -116,10 +116,10 @@ Check the status of a payment.
 ---
 
 ```bash
-curl -X POST https://api.orafi.com/transactions/payment/verify \
+curl -X POST https://api.orafi.app/transactions/payment/verify \
   -H "Content-Type: application/json" \
   -d '{
-    "paymentId": "pay_abc123"
+    "paymentId": {paymentId}
   }'
 ```
 
@@ -148,7 +148,7 @@ Get detailed payment information.
   Payment transaction identifier.
 
 ```bash
-curl -X GET "https://api.orafi.com/transactions/payment/retrieve?paymentId=pay_abc123" \
+curl -X GET "https://api.orafi.app/transactions/payment/retrieve?paymentId={paymentId}" \
   -H "x-api-key: your_api_key"
 ```
 

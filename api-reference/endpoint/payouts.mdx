@@ -18,7 +18,7 @@ POST /transactions/payout/crypto/retry # Retry Failed Payout
 Get available payout balances.
 
 ```bash
-curl -X GET https://api.orafi.com/transactions/payout/balances \
+curl -X GET https://api.orafi.app/transactions/payout/balances \
   -H "x-api-key: your_api_key"
 ```
 
@@ -136,7 +136,7 @@ This method **requires cryptographic signing** to authorize the payout.
 ---
 
 ```bash
-curl -X POST https://api.orafi.com/v1/transactions/payout/crypto \
+curl -X POST https://api.orafi.app/v1/transactions/payout/crypto \
   -H "Content-Type: application/json" \
   -H "x-api-key: your_api_key" \
   -d '{
@@ -148,7 +148,7 @@ curl -X POST https://api.orafi.com/v1/transactions/payout/crypto \
 ```
 
 ```bash
-curl -X POST https://api.orafi.com/v1/transactions/payout/crypto \
+curl -X POST https://api.orafi.app/v1/transactions/payout/crypto \
   -H "Content-Type: application/json" \
   -H "x-api-key: your_api_key" \
   -d '{
@@ -171,6 +171,10 @@ curl -X POST https://api.orafi.com/v1/transactions/payout/crypto \
 }
 ```
 
+## Create Fiat Payout
+
+Coming soon!
+
 ## Retry Failed Payout
 
 Retry a failed payout.
@@ -185,7 +189,7 @@ Retry a failed payout.
 
 
 ```bash
-curl -X POST https://api.orafi.com/transactions/payout/crypto/retry \
+curl -X POST https://api.orafi.app/transactions/payout/crypto/retry \
   -H "Content-Type: application/json" \
   -H "x-api-key: your_api_key" \
   -d '{

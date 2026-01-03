@@ -170,7 +170,7 @@ Let OraFi automatically handle customer creation to ensure consistency and reduc
 
 Create a customer: 
 ```bash
-curl -X POST https://api.orafi.com/v1/customers/create \
+curl -X POST https://api.orafi.app/v1/customers/create \
   -H "Content-Type: application/json" \
   -H "x-api-key: your_api_key" \
   -d '{
@@ -249,7 +249,7 @@ Get all customers:
 
 
 ```bash
-curl -X GET https://api.orafi.com/v1/customers/ \
+curl -X GET https://api.orafi.app/v1/customers/ \
   -H "x-api-key: your_api_key" 
 ```
 
@@ -332,7 +332,7 @@ Get specific customer:
   Unique identifier for a customer.
 
 ```bash
-curl -X GET https://api.orafi.com/v1/customers/{customerId} \
+curl -X GET https://api.orafi.app/v1/customers/{customerId} \
   -H "Content-Type: application/json" \
   -H "x-api-key: your_api_key" 
 ```
@@ -384,7 +384,7 @@ In most cases, we recommend keeping customer records for transaction history, au
 
 Delete a customer: 
 ```bash
-curl -X DELETE https://api.orafi.com/v1/business/mode \
+curl -X DELETE https://api.orafi.app/v1/business/mode \
   -H "Content-Type: application/json" \
   -H "x-api-key: your_api_key"  
 ```
