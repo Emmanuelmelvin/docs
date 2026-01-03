@@ -49,7 +49,7 @@
               "api-reference/endpoint/crypto-settlements",
               "api-reference/endpoint/fiat-settlements",
               "api-reference/endpoint/webhooks",
-              "api-reference/endpoint/webhook-delivery"
+              "api-reference/endpoint/webhook-deliveries"
             ]
           }
         ]
