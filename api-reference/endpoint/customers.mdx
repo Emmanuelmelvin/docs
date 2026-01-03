@@ -144,6 +144,7 @@ For standard checkout, payment links, and hosted payment flows, **do not create 
 Let OraFi automatically handle customer creation to ensure consistency and reduce errors.
 
 
+> Create a customer
 ### Request Body
 
 #### `firstname`
@@ -168,7 +169,6 @@ Let OraFi automatically handle customer creation to ensure consistency and reduc
   Customer’s email address. Used for identification, receipts, and transaction records.
 
 
-Create a customer: 
 ```bash
 curl -X POST https://api.orafi.app/v1/customers/create \
   -H "Content-Type: application/json" \
@@ -206,7 +206,7 @@ All query parameters are optional
 
 ---
 
-Get all customers:
+> Get all customers
 
 ### Query Parameters
 
@@ -323,6 +323,8 @@ GET /customers?limit=20&cursor=cus_82jd82jd9
 
 Get specific customer: 
 
+> Retrieve information about a specific customer
+
 ### Request Body
 
 #### `customerId`
@@ -363,7 +365,7 @@ curl -X GET https://api.orafi.app/v1/customers/{customerId} \
 
 ## Deleting Customers
 
-Permanently deletes a customer associated with your business profile.
+> Permanently deletes a customer associated with your business profile.
 
 <Note>
 Deleting a customer is **irreversible** and should only be used in rare situations such as:
