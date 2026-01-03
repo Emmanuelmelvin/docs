@@ -22,9 +22,9 @@ Each user can have **one business profile**, which controls whether operations a
 
 ---
 
-## Fields
+### Fields
 
-### `id`
+#### `id`
 - **Type:** `String`
 - **Primary Key**
 - **Default:** `uuid()`
@@ -34,7 +34,7 @@ Each user can have **one business profile**, which controls whether operations a
 
 ---
 
-### `userId`
+#### `userId`
 - **Type:** `String`
 - **Unique**
 - **Description:**  
@@ -42,28 +42,28 @@ Each user can have **one business profile**, which controls whether operations a
 
 ---
 
-### `businessName`
+#### `businessName`
 - **Type:** `String`
 - **Description:**  
   Registered name of the business.
 
 ---
 
-### `businessSector`
+#### `businessSector`
 - **Type:** `String`
 - **Description:**  
   Industry or sector in which the business operates.
 
 ---
 
-### `country`
+#### `country`
 - **Type:** `String`
 - **Description:**  
   Country where the business is registered or primarily operates.
 
 ---
 
-### `websiteLink`
+#### `websiteLink`
 - **Type:** `String?`
 - **Nullable**
 - **Description:**  
@@ -71,7 +71,7 @@ Each user can have **one business profile**, which controls whether operations a
 
 ---
 
-### `onboarded`
+#### `onboarded`
 - **Type:** `Boolean`
 - **Default:** `false`
 - **Description:**  
@@ -79,7 +79,7 @@ Each user can have **one business profile**, which controls whether operations a
 
 ---
 
-### `isLive`
+#### `isLive`
 - **Type:** `Boolean`
 - **Default:** `false`
 - **Description:**  
@@ -130,6 +130,8 @@ Each user can have **one business profile**, which controls whether operations a
 
 ## Retrieving Profile
 
+> Get user profile
+
 ```bash
 curl -X GET https://api.orafi.app/v1/profile \
   -H "Content-Type: application/json" \
@@ -166,9 +168,11 @@ curl -X GET https://api.orafi.app/v1/profile \
               }}
 ```
 
+---
+
 ## Email Changes
 
-Request email change:
+> Request email change
 
 ### Request body
 

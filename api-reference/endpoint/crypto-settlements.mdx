@@ -73,7 +73,11 @@ Crypto accounts act as **trusted payout destinations** once linked to a profile.
 * Wallet ownership verification may be required before linking a crypto account.
 * Deleting a crypto account does **not** affect historical payout records.
 
+---
+
 ### Adding Accounts
+
+> Adding a crypto account
 
 ### Request Body
 
@@ -103,7 +107,6 @@ Crypto accounts act as **trusted payout destinations** once linked to a profile.
 ---
 
 
-Adding a crypto account
 
 ```bash
 curl -X POST https://api.orafi.app/v1/settlement/crypto \
@@ -124,8 +127,11 @@ curl -X POST https://api.orafi.app/v1/settlement/crypto \
   "data":null
 }
 ```
+---
 
 ### Retrieving Accounts
+
+> Retrieve saved crypto accounts
 
 ```bash
 curl -X GET https://api.orafi.app/v1/settlement/crypto \
@@ -151,17 +157,18 @@ curl -X GET https://api.orafi.app/v1/settlement/crypto \
 }
 ```
 
+---
+
 ### Deleting Accounts
+> Deleting a saved crypto account
 
-### Request Body
+#### Request Body
 
-#### `accountId`
+##### `accountId`
 - **Type:** `string`
 - **Optional**
 - **Description:**  
   Unique identifier for account.
-
----
 
 ```bash
 curl -X DELETE https://api.orafi.app/v1/settlement/crypto \

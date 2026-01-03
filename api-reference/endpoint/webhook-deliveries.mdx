@@ -140,9 +140,7 @@ Each delivery record provides full visibility into what was sent, when it was se
 ---
 ## Get Webhook Deliveries
 
-## Query Parameters 
-
-### Query Parameters
+### Query Parameters 
 
 #### `status`
 
@@ -230,7 +228,7 @@ GET /webhooks/deliveries?status=FAILED&event=payment.failed&date={"startDate":"2
 * Partial ranges are allowed (`startDate` only or `endDate` only)
 * Always URL-encode the `date` object in production requests
 
-Retrieve webhook deliveries.
+> Retrieve webhook deliveries.
 
 ```bash
 curl -X GET https://api.orafi.app/v1/webhook/deliveries \
@@ -238,6 +236,7 @@ curl -X GET https://api.orafi.app/v1/webhook/deliveries \
 ```
 
 **Response**
+```json
 {
     "success": true,
     "message": "Wehook deliveries retrieved successfully!",

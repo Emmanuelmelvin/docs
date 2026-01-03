@@ -110,7 +110,7 @@ Webhooks enable near-real-time communication between OraFi and your backend syst
 ---
 ## Get Webhook Details
 
-Retrieve webhook configuration.
+> Retrieve webhook configuration.
 
 ```bash
 curl -X GET https://api.orafi.app/v1/webhook \
@@ -120,7 +120,7 @@ curl -X GET https://api.orafi.app/v1/webhook \
 **Response**
 ```json
 {       
-      "success":true,
+      "s`uccess":true,
       "message":"Webhook retrieved successfully",
       "data":{
         "id":"cmjh39i5x0000v814e7owtybc",
@@ -140,7 +140,7 @@ curl -X GET https://api.orafi.app/v1/webhook \
 
 ## Get webhook event types
 
-Retrieve various webhook events available.
+> Retrieve various webhook events available.
 
 ```bash
 curl -X GET https://api.orafi.app/v1/webhook/events \
@@ -168,7 +168,7 @@ curl -X GET https://api.orafi.app/v1/webhook/events \
 
 ## Register Webhook
 
-Set up a webhook endpoint.
+> Set up a webhook endpoint.
 
 ### Request Body
 
@@ -210,6 +210,8 @@ curl -X POST https://api.orafi.app/v1/webhook/register \
 ---
 
 ## Subscribe to Events
+
+> Subscribe to a webhook event
 
 ### Request Body
 

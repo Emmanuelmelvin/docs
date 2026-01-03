@@ -146,12 +146,14 @@ Each transaction records its lifecycle, monetary value, currency token, and owne
 - Related entities (payment, payout, refund) extend the transaction but do not replace it.
 - Status and timestamps should be used to determine transaction finality.
 
+---
+
 ## Retrieving Transactions
 
-Get all transactions:
-## Filter Parameters
+> Get all transactions:
+### Filter Parameters
 
-### `type`
+#### `type`
 - **Type:** `string`
 - **Allowed Values:** `PAYMENT`, `PAYOUT`, `REFUND`
 - **Description:**  
@@ -159,7 +161,7 @@ Get all transactions:
 
 ---
 
-### `status`
+#### `status`
 - **Type:** `string`
 - **Allowed Values:** `PENDING`, `COMPLETED`, `FAILED`
 - **Description:**  
@@ -167,7 +169,7 @@ Get all transactions:
 
 ---
 
-### `token`
+#### `token`
 - **Type:** `string`
 - **Allowed Values:** `USDC`, `BTC`, `ETH`, `EUR`, `USD`
 - **Description:**  
@@ -175,7 +177,7 @@ Get all transactions:
 
 ---
 
-### `mode`
+#### `mode`
 - **Type:** `string`
 - **Allowed Values:** `test`, `live`
 - **Optional**
@@ -184,9 +186,9 @@ Get all transactions:
 
 ---
 
-## Date Filtering
+#### Date Filtering
 
-### `date`
+##### `date`
 - **Type:** `object`
 - **Description:**  
   Defines how transactions should be filtered by date.  
@@ -194,7 +196,7 @@ Get all transactions:
 
 ---
 
-### `date.type`
+##### `date.type`
 - **Type:** `string`
 - **Required**
 - **Allowed Values:** `preset`, `range`
@@ -203,11 +205,11 @@ Get all transactions:
 
 ---
 
-### Preset Date Filtering
+#### Preset Date Filtering
 
 Used when `date.type = "preset"`.
 
-#### `date.interval`
+##### `date.interval`
 - **Type:** `string`
 - **Required**
 - **Allowed Values:**
@@ -223,11 +225,11 @@ Used when `date.type = "preset"`.
 
 ---
 
-### Custom Date Range Filtering
+#### Custom Date Range Filtering
 
 Used when `date.type = "range"`.
 
-#### `date.startDate`
+##### `date.startDate`
 - **Type:** `date`
 - **Required**
 - **Description:**  
@@ -235,7 +237,7 @@ Used when `date.type = "range"`.
 
 ---
 
-#### `date.endDate`
+##### `date.endDate`
 - **Type:** `date`
 - **Required**
 - **Description:**  
@@ -243,16 +245,16 @@ Used when `date.type = "range"`.
 
 ---
 
-## Additional Filters
+### Additional Filters
 
-### `paymentLinkId`
+#### `paymentLinkId`
 - **Type:** `string`
 - **Description:**  
   Filters transactions associated with a specific payment link.
 
 ---
 
-### `paymentMethod`
+#### `paymentMethod`
 - **Type:** `string`
 - **Allowed Values:** `PAYMENT_LINK`, `HOSTED_CHECKOUT`
 - **Description:**  
@@ -260,16 +262,16 @@ Used when `date.type = "range"`.
 
 ---
 
-### `customerId`
+#### `customerId`
 - **Type:** `string`
 - **Description:**  
   Filters transactions belonging to a specific customer.
 
 ---
 
-## Pagination
+### Pagination
 
-### `limit`
+#### `limit`
 - **Type:** `number`
 - **Default:** `20`
 - **Description:**  
@@ -277,7 +279,7 @@ Used when `date.type = "range"`.
 
 ---
 
-### `cursor`
+#### `cursor`
 - **Type:** `string`
 - **Description:**  
   Cursor used for pagination.  
@@ -285,7 +287,7 @@ Used when `date.type = "range"`.
 
 ---
 
-## Notes
+### Notes
 
 - The `date` parameter **must be valid JSON** when passed as a query string.
 - Invalid date structures or formats will result in a `400 Bad Request`.
@@ -356,7 +358,9 @@ GET /transactions?date={"type":"preset","interval":"last7days"}
 GET /transactions?date={"type":"range","startDate":"2025-01-01","endDate":"2025-01-31"}
 ```
 
-Get specific transaction:
+---
+
+> Get specific transaction:
 
 ### Parameters
 
@@ -364,7 +368,6 @@ Get specific transaction:
   - **Required**  
   - **Description**
   Unique identifier for transaction
-  
   
 
 

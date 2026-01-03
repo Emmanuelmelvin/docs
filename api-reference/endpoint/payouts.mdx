@@ -15,7 +15,7 @@ POST /transactions/payout/crypto/retry # Retry Failed Payout
 
 ## Check Balances
 
-Get available payout balances.
+> Get available payout balances.
 
 ```bash
 curl -X GET https://api.orafi.app/transactions/payout/balances \
@@ -38,7 +38,7 @@ curl -X GET https://api.orafi.app/transactions/payout/balances \
 
 ## Create Crypto Payout
 
-Initiates a cryptocurrency payout.  
+> Initiates a cryptocurrency payout.  
 There are **two supported payout methods**:
 
 1. **Using a saved settlement account**
@@ -48,27 +48,27 @@ Only **one method** should be used per request.
 
 ---
 
-## Payout Methods
+### Payout Methods
 
-### 1. Settlement Account Payout
+#### 1. Settlement Account Payout
 
 Uses a previously saved crypto settlement account.
 
 This method **does not require wallet signing**.
 
-#### Required Fields
+##### Required Fields
 - `cryptoSettlementAccountId`
 - `amount`
 
 ---
 
-### 2. Wallet Address Payout
+#### 2. Wallet Address Payout
 
 Sends funds directly to a wallet address.
 
 This method **requires cryptographic signing** to authorize the payout.
 
-#### Required Fields
+##### Required Fields
 - `walletAddress`
 - `bytes`
 - `signature`
@@ -133,7 +133,6 @@ This method **requires cryptographic signing** to authorize the payout.
 - The `bytes` and `signature` fields are used to verify wallet ownership.
 - Requests missing required fields for the selected payout method will be rejected.
 
----
 
 ```bash
 curl -X POST https://api.orafi.app/v1/transactions/payout/crypto \
@@ -171,13 +170,15 @@ curl -X POST https://api.orafi.app/v1/transactions/payout/crypto \
 }
 ```
 
+---
+
 ## Create Fiat Payout
 
 Coming soon!
 
 ## Retry Failed Payout
 
-Retry a failed payout.
+> Retry a failed payout.
 
 ## Request Body
 
