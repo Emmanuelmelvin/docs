@@ -59,12 +59,12 @@
       "anchors": [
         {
           "anchor": "Dashboard",
-          "href": "https://dashboard.orafi.com",
+          "href": "https://dashboard.orafi.app",
           "icon": "book-open-cover"
         },
         {
           "anchor": "Support",
-          "href": "mailto:support@orafi.com",
+          "href": "mailto:support@orafi.app",
           "icon": "envelope"
         }
       ]
@@ -78,13 +78,13 @@
     "links": [
       {
         "label": "Support",
-        "href": "mailto:support@orafi.com"
+        "href": "mailto:support@orafi.app"
       }
     ],
     "primary": {
       "type": "button",
       "label": "Dashboard",
-      "href": "https://dashboard.orafi.com"
+      "href": "https://dashboard.orafi.app"
     }
   },
   "footer": {
